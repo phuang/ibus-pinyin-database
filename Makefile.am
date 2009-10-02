@@ -27,7 +27,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
 	autogen.sh \
-	ibus-pinyin.spec.in \
+	@PACKAGE_NAME@.spec.in \
 	$(NULL)
 
 noinst_DIST = \
