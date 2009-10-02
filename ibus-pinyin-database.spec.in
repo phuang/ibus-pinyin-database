@@ -1,0 +1,59 @@
+Name:       @PACKAGE_NAME@
+Version:    @PACKAGE_VERSION@
+Release:    1%{?dist}
+Summary:    The Chinese Pinyin engine for IBus input platform
+License:    GPLv2+
+Group:      System Environment/Libraries
+URL:        http://code.google.com/p/ibus
+Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
+Source1:    pinyin-database-1.2.99.tar.bz2
+
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires:  gettext-devel
+BuildRequires:  libtool
+BuildRequires:  pkgconfig
+BuildRequires:  sqlite-devel
+BuildRequires:  libuuid-devel
+BuildRequires:  ibus-devel >= 1.2.0
+
+Requires(post): sqlite
+
+Requires:   ibus >= 1.2.0
+
+%description
+The Chinese Pinyin input method for IBus platform.
+
+%prep
+%setup -q
+cp %{SOURCE1} data
+
+%build
+%configure --disable-static
+# make -C po update-gmo
+make %{?_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true install
+
+%find_lang %{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post
+cd %{_datadir}/ibus-pinyin/db
+sqlite3 main.db ".read create_index.sql"
+
+%files -f %{name}.lang
+%defattr(-,root,root,-)
+%doc AUTHORS COPYING README
+%{_libexecdir}/ibus-engine-pinyin
+%{_libexecdir}/ibus-setup-pinyin
+%{_datadir}/@PACKAGE@
+%{_datadir}/ibus/component/*
+
+%changelog
+* Fri Aug 08 2008 Peng Huang <shawn.p.huang@gmail.com> - @VERSION@-1
+- The first version.
