@@ -63,6 +63,7 @@ AM_CONDITIONAL(IBUS_BUILD_PINYIN_DATABASE, [test x"$enable_pinyin_database" = x"
 AC_CONFIG_FILES([
   Makefile
   ibus-pinyin-database.spec
+  ibus-pinyin-database-1.0.pc
   data/Makefile
   m4/Makefile
 ])

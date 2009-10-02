@@ -1,0 +1,5 @@
+prefix=@prefix@
+
+Name: IBus Pinyin Database
+Description: IBus Pinyin Database
+Version: @VERSION@

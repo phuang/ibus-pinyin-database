@@ -25,9 +25,13 @@ SUBDIRS = \
 
 ACLOCAL_AMFLAGS = -I m4
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = ibus-pinyin-database-1.0.pc
+
 EXTRA_DIST = \
 	autogen.sh \
-	@PACKAGE_NAME@.spec.in \
+	ibus-pinyin-database.spec.in \
+	ibus-pinyin-database-1.0.pc.in \
 	$(NULL)
 
 noinst_DIST = \
